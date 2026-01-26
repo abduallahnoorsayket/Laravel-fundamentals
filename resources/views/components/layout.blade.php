@@ -28,7 +28,7 @@
     </style>
 </head>
 
-<body class="bg-gray-700">
+<body class="bg-gray-700 text-white">
     <nav>
         <a href="/">Home</a>
         <a href="/about">About us</a>
