@@ -1,6 +1,5 @@
 <x-layout title="home page">
-    <div class="max-w-xl mx-auto p-6 bg-gray-700">
-        >
+    <div class="card bg-neutral p-6 mt-6 text-white">
         <h2 class="mt-6 font-bold text-white">Your ideas</h2>
         <p class="mt-6 font-bold text-white">{{ $idea->description }}</p>
         <div class="mt-6">

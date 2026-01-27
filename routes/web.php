@@ -4,24 +4,44 @@
  * @file
  */
 
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\SessionsController;
 // Use Illuminate\Support\Facades\DB;.
 use App\Http\Controllers\IdeaController;
 use Illuminate\Support\Facades\Route;
 
-// Create.
-Route::get('/ideas/create', [IdeaController::class, 'create']);
-// /store.
-Route::post('/ideas', [IdeaController::class, 'store']);
-// List.
-Route::get('/ideas', [IdeaController::class, 'index']);
-// Route model binding. Details view.
-Route::get('/ideas/{idea}', [IdeaController::class, 'show']);
-// Edit.Single record.
-Route::get('/ideas/{idea}/edit', [IdeaController::class, 'edit']);
-// Update.
-Route::patch('/ideas/{idea}', [IdeaController::class, 'update']);
-// Destroy.
-Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy']);
+Route::get('/', function () {
+    return 'placeholder for home';
+});
+
+Route::middleware('auth')->group(function () {
+  // Create.
+  Route::get('/ideas/create', [IdeaController::class, 'create']);
+  // /store.
+  Route::post('/ideas', [IdeaController::class, 'store']);
+  // List.
+  Route::get('/ideas', [IdeaController::class, 'index'])->middleware('auth');
+  // Route model binding. Details view.
+  Route::get('/ideas/{idea}', [IdeaController::class, 'show']);
+  // Edit.Single record.
+  Route::get('/ideas/{idea}/edit', [IdeaController::class, 'edit']);
+  // Update.
+  Route::patch('/ideas/{idea}', [IdeaController::class, 'update']);
+  // Destroy.
+  Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy']);
+  // Logout.
+  Route::delete('/logout', [SessionsController::class, 'destroy']);
+});
+
+Route::middleware('guest')->group(function () {
+  // Register.
+  Route::get('/register', [RegisteredUserController::class, 'create']);
+  Route::post('/register', [RegisteredUserController::class, 'store']);
+  // Login.
+  Route::get('/login', [SessionsController::class, 'create'])->name('login');
+  Route::post('/login', [SessionsController::class, 'store']);
+});
+
 
 
 
