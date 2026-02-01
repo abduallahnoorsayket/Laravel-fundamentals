@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
   // Route model binding. Details view.
   Route::get('/ideas/{idea}', [IdeaController::class, 'show']);
   // Edit.Single record.
+  //   Route::get('/ideas/{idea}/edit', [IdeaController::class, 'edit'])->can('update', 'idea');.
   Route::get('/ideas/{idea}/edit', [IdeaController::class, 'edit']);
   // Update.
   Route::patch('/ideas/{idea}', [IdeaController::class, 'update']);
@@ -41,10 +42,16 @@ Route::middleware('guest')->group(function () {
   Route::get('/login', [SessionsController::class, 'create'])->name('login');
   Route::post('/login', [SessionsController::class, 'store']);
 });
-
-
-
-
+// Two different ways to protect routes for authorisation 1.As middleware 2.Inside closure
+// Route::get('/admin', function () {
+//     Gate::authorize('view-admin');
+//     return "Admin area";
+// });.
+Route::middleware('can:view-admin')->group(function () {
+    Route::get('/admin', function () {
+      return "prive page";
+    });
+});
 // Route::get('/ideas/{id}', function ($id) {.
 // // $idea = Idea::find($id);
 //   $idea = Idea::findOrFail($id);

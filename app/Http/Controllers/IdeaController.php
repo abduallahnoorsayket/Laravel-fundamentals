@@ -6,6 +6,7 @@ use App\Http\Requests\IdeaRequest;
 use App\Models\Idea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\Gate;
 
 /**
  *
@@ -31,6 +32,7 @@ class IdeaController extends Controller {
    * Show the form for creating a new resource.
    */
   public function create() {
+    // Gate::authorize('create', Idea::class);.
     return view('ideas.create', []);
   }
 
@@ -54,6 +56,7 @@ class IdeaController extends Controller {
    * Display the specified resource.
    */
   public function show(Idea $idea) {
+    Gate::authorize('update', $idea);
     return view('ideas.show', [
       'idea' => $idea,
     ]);
@@ -63,6 +66,7 @@ class IdeaController extends Controller {
    * Show the form for editing the specified resource.
    */
   public function edit(Idea $idea) {
+    Gate::authorize('update', $idea);
     return view('ideas.edit', [
       'idea' => $idea,
     ]);
@@ -72,6 +76,7 @@ class IdeaController extends Controller {
    * Update the specified resource in storage.
    */
   public function update(IdeaRequest $request, Idea $idea) {
+    Gate::authorize('update', $idea);
     $idea->update([
       'description' => request('description'),
     ]);
@@ -83,6 +88,7 @@ class IdeaController extends Controller {
    * Remove the specified resource from storage.
    */
   public function destroy(Idea $idea) {
+    Gate::authorize('update', $idea);
     $idea->delete();
     return redirect('/ideas');
   }
