@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\IdeaRequest;
 use App\Models\Idea;
+use App\Models\User;
+use App\Notifications\IdeaPublished;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\Gate;
@@ -39,15 +41,17 @@ class IdeaController extends Controller {
   /**
    * Store a newly created resource in storage.
    */
-  public function store(IdeaRequest $request) {
+  public function store(IdeaRequest $request, User $user) {
     // $request->validate(
     //     ['description' => ['required', 'min:10']]);
-    FacadesAuth::user()->ideas()->create([
+    $idea = FacadesAuth::user()->ideas()->create([
     // 'description' => request('description'),
       'description' => $request['description'],
       'state' => 'pending',
     // 'user_id' => FacadesAuth::id(),
     ]);
+
+    FacadesAuth::user()->notify(new IdeaPublished($idea));
 
     return redirect('/ideas');
   }
