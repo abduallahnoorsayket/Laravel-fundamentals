@@ -13,7 +13,7 @@
             <label class="label">Password</label>
             <input type="password" name="password" class="input" placeholder="Password" />
             <x-form.error name="password" />
-            <button type="submit" class="btn btn-neutral mt-4">Register</button>
+            <button type="submit" class="btn btn-neutral mt-4" data-test='register-button'>Register</button>
         </fieldset>
     </form>
 

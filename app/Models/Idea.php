@@ -16,6 +16,14 @@ class Idea extends Model {
    * @guard
    */
   protected $guarded = [];
+  /**
+   * Attitbutes.
+   *
+   * @attitbutes
+   */
+  protected $attributes = [
+    'state' => 'pending',
+  ];
 
   /**
    *

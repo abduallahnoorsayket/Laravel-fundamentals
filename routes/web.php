@@ -11,9 +11,8 @@ use App\Http\Controllers\IdeaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return 'placeholder for home';
+    return 'Welcome to the page';
 });
-
 Route::middleware('auth')->group(function () {
   // Create.
   Route::get('/ideas/create', [IdeaController::class, 'create']);
